@@ -1,0 +1,434 @@
+{% extends "toolkit/base.html" %}
+{% block content %}
+{% load static %}
+
+<head>
+    <title>
+        {% block title %}
+        Sitemap
+        {% endblock %}
+    </title>
+    <style>
+        .MultiCheckBox {
+            border:1px solid #e2e2e2;
+            padding: 5px;
+            border-radius:4px;
+            cursor:pointer;
+        }
+
+        .MultiCheckBox .k-icon{ 
+            font-size: 15px;
+            float: right;
+            font-weight: bolder;
+            margin-top: -7px;
+            height: 10px;
+            width: 14px;
+            color:#787878;
+        } 
+
+        .MultiCheckBoxDetail {
+            display:none;
+            position:absolute;
+            border:1px solid #e2e2e2;
+            overflow-y:hidden;
+        }
+
+        .MultiCheckBoxDetailBody {
+            background-color: white;
+            overflow-y:scroll;
+        }
+
+            .MultiCheckBoxDetail .cont  {
+                clear:both;
+                overflow: hidden;
+                padding: 2px;
+            }
+
+            .MultiCheckBoxDetail .cont:hover  {
+                background-color:#cfcfcf;
+            }
+
+            .MultiCheckBoxDetailBody > div > div {
+                float:left;
+            }
+
+        .MultiCheckBoxDetailHeader {
+            overflow:hidden;
+            position:relative;
+            height: 28px;
+            background-color:#3d3d3d;
+        }
+
+            .MultiCheckBoxDetailHeader>input {
+                position: absolute;
+                top: 4px;
+                left: 3px;
+            }
+
+            .MultiCheckBoxDetailHeader>div {
+                position: absolute;
+                top: 5px;
+                left: 24px;
+                color:#fff;
+            }
+        .mulinput{
+            margin: 5px 5px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<div class="d-flex flex-column align-self-start">
+    <div class="searchapi">
+        <form autocomplete="off" method="post" action="">
+            <div class="input-group input-group-lg mb-3" >
+                {% csrf_token %}
+                <input class="form-control searchapiinput" name="burptosqlmap" id="burptosqlmap"  type="file" style="border: none;">
+                <button class="btn mybutton" type='submit'>
+                    <i class='bx bx-file'></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    
+    {% if result %}
+    <table class="table table-hover table-dark">
+        <tr>
+            <th style="text-align:center">Host</th>
+            <th style="text-align:center">Method</th>
+            <th style="text-align:center">URL</th>
+            <th style="text-align:center">Lenght</th>
+            <th style="text-align:center">Request</th>
+            <th style="text-align:center">Status</th>
+            <th style="text-align:center">SQLMAP</th>
+        </tr>
+        {% for row in result %}
+        <script>
+            $(document).ready(function () {
+                $("#tamper{{ forloop.counter }}").CreateMultiCheckBox({defaultText : '--Select Tamper--', height:'450px' });
+            });
+        </script>
+        <tr>
+            <td style="text-align:center">{{ row.host}}</td>
+            <td style="text-align:center">{{ row.method}}</td>
+            <td style="text-align:left">{{ row.url}}</td>
+            <td style="text-align:center">{{ row.responselength}}</td>
+            <td style="text-align:center">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#requestModal{{ forloop.counter }}">
+                    Request
+                </button>
+                <!-- <a href="/target/exploit={{ forloop.counter }}">Exploit</a> -->
+            </td>
+            {% if row.status == "200" %}
+            <td style="text-align:center" class="bg-success">{{ row.status}}</td>
+            <td style="text-align:center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sqlmapModal{{ forloop.counter }}">
+                    Sqlmap 
+                </button>
+            </td>
+            {% else %}
+            <td style="text-align:center" class="bg-danger">{{ row.status}}</td>
+            {% endif %}
+            <div class="accordion" id="accordionExample">
+                <!-- Modal -->
+                <div class="modal fade" id="sqlmapModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="sqlmapModalLabel{{ forloop.counter }}"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="color: black;">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="sqlmapModalLabel{{ forloop.counter }}">Sqlmap {{ forloop.counter }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" >
+                                <form action= "exploit={{ forloop.counter }}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="form-group col-sm-6">
+                                            <label> Level: <input type="text" id="textInput" value=""
+                                                    style="width: 20px; height: 15px; outline: none; border: 0px solid;"
+                                                    readonly></label>
+                                            <input type="range" class="form-control" min="1" max="5"
+                                                onchange="updateTextInput(this.value);" name="level" id="level" autofocus
+                                                required>
+                                        </div>
+    
+                                        <div class="form-group col-sm-6">
+                                            <label>Risk: <input type="text" id="textInput1" value=""
+                                                    style="width: 20px; height: 15px; outline: none; border: 0px solid;"
+                                                    readonly></label>
+                                            <input type="range" class="form-control" min="1" max="3"
+                                                onchange="updateTextInput1(this.value);" name="risk" id="risk" autofocus
+                                                required>
+                                        </div>
+                                    </div>
+    
+                                    <div class="row">
+                                        <div class="form-group col-sm-6">
+                                            <label>Database:</label>
+                                            <div class="form-group">
+                                                <select class="form-control" id="database" name="database">
+                                                    <option disabled selected>--Select Database--</option>
+                                                    <option>MySQL</option>
+                                                    <option>Oracle</option>
+                                                    <option>PostgreSQL</option>
+                                                    <option>Microsoft SQL Server</option>
+                                                    <option>Microsoft Access</option>
+                                                    <option>IBM DB2</option>
+                                                    <option>SQLite</option>
+                                                    <option>Firebird</option>
+                                                    <option>Sybase</option>
+                                                    <option>SAP MaxDB</option>
+                                                    <option>Informix</option>
+                                                    <option>MariaDB</option>
+                                                    <option>Percona</option>
+                                                    <option>MemSQL</option>
+                                                    <option>TiDB</option>
+                                                    <option>CockroachDB</option>
+                                                    <option>HSQLDB</option>
+                                                    <option>H2</option>
+                                                    <option>MonetDB</option>
+                                                    <option>Apache Derby</option>
+                                                    <option>Amazon Redshift</option>
+                                                    <option>Vertica</option>
+                                                    <option>Mckoi</option>
+                                                    <option>Presto</option>
+                                                    <option>Altibase</option>
+                                                    <option>MimerSQL</option>
+                                                    <option>CrateDB</option>
+                                                    <option>Greenplum</option>
+                                                    <option>Drizzle</option>
+                                                    <option>Apache Ignite</option>
+                                                    <option>Cubrid</option>
+                                                    <option>InterSystems Cache</option>
+                                                    <option>InterSystems Cache</option>
+                                                    <option>IRIS</option>
+                                                    <option>eXtremeDB</option>
+                                                    <option>FrontBase</option>
+                                                </select>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group col-sm-6">
+                                            <label>Tamper:</label>
+                                            <div class="form-group">
+                                                <select class="form-control" id="tamper{{ forloop.counter }}" name="tamper">
+                                                    <option value = '0eunion'>0EUNION</option>
+                                                    <option value = 'apostrophemask'>APOSTROPHEMASK</option>
+                                                    <option value = 'apostrophenullencode'>APOSTROPHENULLENCODE</option>
+                                                    <option value = 'appendnullbyte'>APPENDNULLBYTE</option>
+                                                    <option value = 'base64encode'>BASE64ENCODE</option>
+                                                    <option value = 'between'>BETWEEN</option>
+                                                    <option value = 'binary'>BINARY</option>
+                                                    <option value = 'bluecoat'>BLUECOAT</option>
+                                                    <option value = 'chardoubleencode'>CHARDOUBLEENCODE</option>
+                                                    <option value = 'charencode'>CHARENCODE</option>
+                                                    <option value = 'charunicodeencode'>CHARUNICODEENCODE</option>
+                                                    <option value = 'charunicodeescape'>CHARUNICODEESCAPE</option>
+                                                    <option value = 'commalesslimit'>COMMALESSLIMIT</option>
+                                                    <option value = 'commalessmid'>COMMALESSMID</option>
+                                                    <option value = 'commentbeforeparentheses'>COMMENTBEFOREPARENTHESES</option>
+                                                    <option value = 'concat2concatws'>CONCAT2CONCATWS</option>
+                                                    <option value = 'dunion'>DUNION</option>
+                                                    <option value = 'equaltolike'>EQUALTOLIKE</option>
+                                                    <option value = 'equaltorlike'>EQUALTORLIKE</option>
+                                                    <option value = 'escapequotes'>ESCAPEQUOTES</option>
+                                                    <option value = 'greatest'>GREATEST</option>
+                                                    <option value = 'halfversionedmorekeywords'>HALFVERSIONEDMOREKEYWORDS</option>
+                                                    <option value = 'hex2char'>HEX2CHAR</option>
+                                                    <option value = 'htmlencode'>HTMLENCODE</option>
+                                                    <option value = 'ifnull2casewhenisnull'>IFNULL2CASEWHENISNULL</option>
+                                                    <option value = 'ifnull2ifisnull'>IFNULL2IFISNULL</option>
+                                                    <option value = 'informationschemacomment'>INFORMATIONSCHEMACOMMENT</option>
+                                                    <option value = 'least'>LEAST</option>
+                                                    <option value = 'lowercase'>LOWERCASE</option>
+                                                    <option value = 'luanginx'>LUANGINX</option>
+                                                    <option value = 'misunion'>MISUNION</option>
+                                                    <option value = 'modsecurityversioned'>MODSECURITYVERSIONED</option>
+                                                    <option value = 'modsecurityzeroversioned'>MODSECURITYZEROVERSIONED</option>
+                                                    <option value = 'multiplespaces'>MULTIPLESPACES</option>
+                                                    <option value = 'ord2ascii'>ORD2ASCII</option>
+                                                    <option value = 'overlongutf8'>OVERLONGUTF8</option>
+                                                    <option value = 'overlongutf8more'>OVERLONGUTF8MORE</option>
+                                                    <option value = 'percentage'>PERCENTAGE</option>
+                                                    <option value = 'plus2concat'>PLUS2CONCAT</option>
+                                                    <option value = 'plus2fnconcat'>PLUS2FNCONCAT</option>
+                                                    <option value = 'randomcase'>RANDOMCASE</option>
+                                                    <option value = 'randomcomments'>RANDOMCOMMENTS</option>
+                                                    <option value = 'schemasplit'>SCHEMASPLIT</option>
+                                                    <option value = 'sleep2getlock'>SLEEP2GETLOCK</option>
+                                                    <option value = 'password'>PASSWORD</option>
+                                                    <option value = 'space2comment'>SPACE2COMMENT</option>
+                                                    <option value = 'space2dash'>SPACE2DASH</option>
+                                                    <option value = 'space2hash'>SPACE2HASH</option>
+                                                    <option value = 'space2morecomment'>SPACE2MORECOMMENT</option>
+                                                    <option value = 'space2morehash'>SPACE2MOREHASH</option>
+                                                    <option value = 'space2mssqlblank'>SPACE2MSSQLBLANK</option>
+                                                    <option value = 'space2mssqlhash'>SPACE2MSSQLHASH</option>
+                                                    <option value = 'space2mysqlblank'>SPACE2MYSQLBLANK</option>
+                                                    <option value = 'space2mysqldash'>SPACE2MYSQLDASH</option>
+                                                    <option value = 'space2plus'>SPACE2PLUS</option>
+                                                    <option value = 'space2randomblank'>SPACE2RANDOMBLANK</option>
+                                                    <option value = 'substring2leftright'>SUBSTRING2LEFTRIGHT</option>
+                                                    <option value = 'symboliclogical'>SYMBOLICLOGICAL</option>
+                                                    <option value = 'unionalltounion'>UNIONALLTOUNION</option>
+                                                    <option value = 'unmagicquotes'>UNMAGICQUOTES</option>
+                                                    <option value = 'uppercase'>UPPERCASE</option>
+                                                    <option value = 'varnish'>VARNISH</option>
+                                                    <option value = 'versionedkeywords'>VERSIONEDKEYWORDS</option>
+                                                    <option value = 'versionedmorekeywords'>VERSIONEDMOREKEYWORDS</option>
+                                                    <option selected disabled hidden>--Select Tamper--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="modal-footer ">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="modal fade" id="requestModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="requestModalLabel{{ forloop.counter }}"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="color: black;">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="requestModalLabel{{ forloop.counter }}">Request</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="padding: auto;">
+                                {{ row.request}}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% endif %}
+</div>
+
+
+
+
+
+{% if error %}
+<h2 style="text-align:center" class="text-danger">{{ error }}</h2>
+{% endif %}
+<!-- Button trigger modal -->
+
+<script>
+    function updateTextInput(val) {
+        document.getElementById('textInput').value = val;
+    }
+
+    function updateTextInput1(val) {
+        document.getElementById('textInput1').value = val;
+    }
+
+    var show = true;
+
+    $(document).ready(function () {
+            $(document).on("click", ".MultiCheckBox", function () {
+                var detail = $(this).next();
+                detail.show();
+            });
+
+            $(document).on("click", ".MultiCheckBoxDetailHeader input", function (e) {
+                e.stopPropagation();
+                var hc = $(this).prop("checked");
+                $(this).closest(".MultiCheckBoxDetail").find(".MultiCheckBoxDetailBody input").prop("checked", hc);
+                $(this).closest(".MultiCheckBoxDetail").next().UpdateSelect();
+            });
+
+            $(document).on("click", ".MultiCheckBoxDetailHeader", function (e) {
+                var inp = $(this).find("input");
+                var chk = inp.prop("checked");
+                inp.prop("checked", !chk);
+                $(this).closest(".MultiCheckBoxDetail").find(".MultiCheckBoxDetailBody input").prop("checked", !chk);
+                $(this).closest(".MultiCheckBoxDetail").next().UpdateSelect();
+            });
+
+            $(document).on("click", ".MultiCheckBoxDetail .cont input", function (e) {
+                e.stopPropagation();
+                $(this).closest(".MultiCheckBoxDetail").next().UpdateSelect();
+
+                var val = ($(".MultiCheckBoxDetailBody input:checked").length == $(".MultiCheckBoxDetailBody input").length)
+                $(".MultiCheckBoxDetailHeader input").prop("checked", val);
+            });
+
+            $(document).on("click", ".MultiCheckBoxDetail .cont", function (e) {
+                var inp = $(this).find("input");
+                var chk = inp.prop("checked");
+                inp.prop("checked", !chk);
+
+                var multiCheckBoxDetail = $(this).closest(".MultiCheckBoxDetail");
+                var multiCheckBoxDetailBody = $(this).closest(".MultiCheckBoxDetailBody");
+                multiCheckBoxDetail.next().UpdateSelect();
+
+                var val = ($(".MultiCheckBoxDetailBody input:checked").length == $(".MultiCheckBoxDetailBody input").length)
+                $(".MultiCheckBoxDetailHeader input").prop("checked", val);
+            });
+
+            $(document).mouseup(function (e) {
+                var container = $(".MultiCheckBoxDetail");
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    container.hide();
+                }
+            });
+        });
+
+        var defaultMultiCheckBoxOption = { width: 'auto', defaultText: 'Select Below', height: 'auto' };
+
+        jQuery.fn.extend({
+            CreateMultiCheckBox: function (options) {
+
+                var localOption = {};
+                localOption.width = (options != null && options.width != null && options.width != undefined) ? options.width : defaultMultiCheckBoxOption.width;
+                localOption.defaultText = (options != null && options.defaultText != null && options.defaultText != undefined) ? options.defaultText : defaultMultiCheckBoxOption.defaultText;
+                localOption.height = (options != null && options.height != null && options.height != undefined) ? options.height : defaultMultiCheckBoxOption.height;
+
+                this.hide();
+                this.attr("multiple", "multiple");
+                var divSel = $("<div class='MultiCheckBox'>" + localOption.defaultText + "</div>").insertBefore(this);
+                divSel.css({ "width": localOption.width });
+
+                var detail = $("<div class='MultiCheckBoxDetail'><div class='MultiCheckBoxDetailHeader'><input type='checkbox' class='mulinput' value='-1982' /><div> All</div></div><div class='MultiCheckBoxDetailBody'></div></div>").insertAfter(divSel);
+                detail.css({ "width": parseInt(options.width) + 10, "max-height": localOption.height });
+                var multiCheckBoxDetailBody = detail.find(".MultiCheckBoxDetailBody");
+
+                this.find("option").each(function () {
+                    var val = $(this).attr("value");
+
+                    if (val == undefined)
+                        val = '';
+
+                    multiCheckBoxDetailBody.append("<div class='cont'><div><input type='checkbox' class='mulinput' value='" + val + "' /></div><div>" + $(this).text() + "</div></div>");
+                });
+
+                multiCheckBoxDetailBody.css("max-height", (parseInt($(".MultiCheckBoxDetail").css("max-height")) - 28) + "px");
+            },
+            UpdateSelect: function () {
+                var arr = [];
+
+                this.prev().find(".mulinput:checked").each(function () {
+                    arr.push($(this).val());
+                });
+
+                this.val(arr);
+            },
+        });
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+    {% block title %}
+    {% endblock %}
+  </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{% static 'toolkit/css/boxicons.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'toolkit/css/sidebar.css' %}" />
+  <link href="{% static 'toolkit/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'toolkit/css/search.css' %}" rel="stylesheet">
+
+  <style>
+    body {
+      /* margin-top: 130px; */
+      color: aliceblue;
+      background-color: #181818;
+
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* .btn:hover{
+      background-color: #ffc107;
+      border: #ffc107;
+      transform: translateY(0) scale(1.05);
+    } */
+
+  </style>
+</head>
+
+<body id="body-pd" class="body-pd">
+  <header class="header body-pd" id="header" >
+    <div class="header_toggle"> <i class='bx bx-arrow-back' id="header-toggle"></i> </div>
+    <div class="header_img"> <img src="{% static 'toolkit/images/sidebar_logo.png' %}"> </div>
+  </header>
+  <div class="l-navbar show" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <a href="#" class="nav_logo">
+          <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name"><h2>DATOOLS</h1></span>
+        </a>
+        <div class="nav_list">
+          <a href="{% url 'home' %}" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span
+              class="nav_name">Trang chủ</span> </a><hr>
+          <a href="{% url 'igtools' %}" class="nav_link"> <i class='bx bx-wrench nav_icon'></i> <span
+              class="nav_name">Công cụ thu thập</span> </a><hr>
+          <a href="{% url 'extools' %}" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span
+              class="nav_name">Công cụ xác định</span> </a>
+        </div>
+      </div>
+      <div class="" style="margin:0 auto 10%; ">
+        <a href="https://github.com/HNT2789/" target="_blank"><i class="fab fa-github"></i></a>
+        &nbsp;&nbsp;
+        <a href="mailto:thaihoang2789@gmail.com" target="_blank"><i class="far fa-envelope "></i></a>
+      </div>
+    </nav>
+  </div>
+
+  <!--Container Main start-->
+  <div class="container w-100 p-3 min-vh-70" style="margin-top:150px;">
+    {% block content %}
+
+    {% endblock %}
+    <script src="{% static 'toolkit/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'toolkit/js/popper.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'toolkit/js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'toolkit/js/f5cf569195.js' %}" crossorigin="anonymous"></script>
+
+    <script src="{% static 'toolkit/js/sidebar.js' %}" crossorigin="anonymous"></script>
+  </div>
+
+  <!-- Footer -->
+  <footer class="">
+    <!-- Copyright -->
+    <hr>
+    <div class="footer-copyright text-center py-3 ">© 2022 Copyright:
+      <a href='https://github.com/HNT2789' target='_blank'>
+        Github Page
+      </a>
+    </div>
+    <!-- Copyrigh -->
+  </footer>
+
+</body>
+
+</html>

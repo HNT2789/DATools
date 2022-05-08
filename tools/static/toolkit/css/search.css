@@ -1,0 +1,34 @@
+.searchapi {
+    padding: 0 25%;
+}
+
+.input-group:hover{
+    border-radius: 25px;
+	box-shadow: 2px 2px 15px 2px #0AADDF ;
+}
+
+
+.searchapiinput {
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+    background-color: #3A3B3C;
+}
+
+.searchapiinput::-webkit-input-placeholder {
+    color: #0AADDF;
+    opacity: 0.5;
+    
+}
+
+.searchapiinput:focus {
+    background-color: #3A3B3C;
+    color: white !important;
+}
+
+.mybutton {
+    color: #0AADDF !important;
+    background-color: #3A3B3C;
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+}
+

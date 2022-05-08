@@ -1,0 +1,65 @@
+{% extends "toolkit/base.html" %}
+{% block content %}
+{% load static %}
+<head>
+    <title>
+        {% block title %}
+        CVE-Search
+        {% endblock %}
+    </title>
+</head>
+
+
+<div class="d-flex flex-column align-self-start">
+    <div class="searchapi">
+        <form autocomplete="off" method="post" action="">
+            <div class="input-group input-group-lg mb-3" >
+                {% csrf_token %}
+                <input class="form-control searchapiinput" name="cve_id" type="text" placeholder="Nhập CVE ID" style="border: none;">
+                <button class="btn mybutton" type='submit'>
+                    <i class='bx bx-search-alt'></i>
+                </button>
+            </div>
+        </form>
+    </div>
+ 
+
+
+    {% if result %}
+    <table class="table table-dark">
+        <tr class="text-info">
+            <th style="text-align:center">CVE ID</th>
+            <th style="text-align:center">Được phát hành</th>
+            <th style="text-align:center">Đã sửa đổi</th>
+            <th style="text-align:center">CVSS</th>
+            <th style="text-align:center">Độ phức tạp</th>
+        </tr>
+        <tr >
+            <td style="text-align:center">{{ result.cve_id}}</td>
+            <td style="text-align:center">{{ result.published}}</td>
+            <td style="text-align:center">{{ result.modified}}</td>
+            <td style="text-align:center">{{ result.cvss}}</td>
+            <td style="text-align:center">{{ result.complexity}}</td>
+        </tr>
+    </table>
+    <br>
+    <table class=" table table-dark">
+        <tr class="text-info">
+            <th style="text-align:center">Tóm tắt</th>
+        </tr>
+        <tr>
+            <td style="text-align:center">{{ result.summary }}</td>
+        </tr>
+    </table>
+    
+    {% endif %}
+    {% if error %}
+    <h2 style="text-align:center">{{ error }}</h2>
+    {% endif %}
+
+</div>
+
+
+
+
+{% endblock %}

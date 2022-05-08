@@ -1,0 +1,42 @@
+{% extends "toolkit/base.html" %}
+{% block content %}
+{% load static %}
+
+<head>
+  <title>
+    {% block title %}
+    Site Report
+    {% endblock %}
+  </title>
+  <link rel="stylesheet" type="text/css" href="{% static 'toolkit/css/sitereport.css' %}" media="all" />
+</head>
+
+
+<div class="d-flex flex-column align-self-start">
+  <div class="searchapi">
+    <form autocomplete="off" method="post" action="">
+        <div class="input-group input-group-lg mb-3" >
+            {% csrf_token %}
+            <input class="form-control searchapiinput" name="target_url" type="text" placeholder="Nhập đường dẫn của website" style="border: none;">
+            <button class="btn mybutton" type='submit'>
+                <i class='bx bx-search-alt'></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+  {% if error %}
+  <h2 style="text-align:center" class="text-danger">{{ error }}</h2>
+  {% endif %}
+
+
+  {% if result %}
+  <div class="banner">
+    <div class="banner__container--text">
+      {{result | safe}}
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

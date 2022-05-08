@@ -1,0 +1,27 @@
+{% extends "toolkit/base.html" %}
+{% block content %}
+{% load static %}
+<head>
+  <title>
+    {% block title %}
+    DAtools
+    {% endblock %}
+  </title>
+  <style>
+    .text-center{
+      background-color: #181818;
+    }
+    body{
+      background-color: #181818;
+    }
+  </style> 
+</head>
+
+
+<!-- Page Content -->
+<div class="text-center">
+  <img src="{% static 'toolkit/images/1pLi.gif' %}" alt="boy" class="w3-image" width="650px" height="450px">
+</div>
+
+
+{% endblock %}

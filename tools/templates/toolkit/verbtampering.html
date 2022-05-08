@@ -1,0 +1,69 @@
+{% extends "toolkit/base.html" %}
+{% block content %}
+{% load static %}
+
+<head>
+  <title>
+    {% block title %}
+    HTTP-VerbTampering - RedTeam Toolkit
+    {% endblock %}
+  </title>
+</head>
+
+
+<div class="d-flex flex-column align-self-start">
+  <!-- <div class="searchapi">
+    <form autocomplete="off" method="post" action="">
+      <div class="input-group mb-3">
+        {% csrf_token %}
+        <input class="form-control" name="target_url" type="text" placeholder="Nhập đường dẫn của website">
+        <button class="btn btn-info text-white" type='submit'>Tìm kiếm</button>
+      </div>
+    </form>
+  </div> -->
+  <div class="searchapi">
+    <form autocomplete="off" method="post" action="">
+        <div class="input-group input-group-lg mb-3" >
+            {% csrf_token %}
+            <input class="form-control searchapiinput" name="target_url" type="text" placeholder="Nhập đường dẫn của website" style="border: none;">
+            <button class="btn mybutton" type='submit'>
+                <i class='bx bx-search-alt'></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+
+  {% if result %}
+  <table class="table table-hover table-dark">
+    <tr class="text-info">
+      <th style="text-align:center">METHOD</th>
+      <th style="text-align:center">STATUS CODE</th>
+      <th style="text-align:center">LENGTH</th>
+      <th style="text-align:center">REASON</th>
+    </tr>
+    {% for method, values in result %}
+
+    <tr >
+      <td style="text-align:center">{{ method}}</td>
+      {% if values.status_code == 200 %}
+        <td style="text-align:center" class="bg-success">{{ values.status_code}}</td>
+      {% else %}
+        <td style="text-align:center">{{ values.status_code}}</td>
+      {% endif %}
+
+      <td style="text-align:center">{{ values.length}}</td>
+      <td style="text-align:center">{{ values.reason}}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+  {% endif %}
+
+
+  {% if error %}
+  <h2 style="text-align:center" class="text-danger">{{ error }}</h2>
+  {% endif %}
+</div>
+
+  {% endblock %}
