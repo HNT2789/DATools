@@ -66,6 +66,7 @@ def burpConvert(request):
             if form.is_valid():
                 burptosqlmap = form.data.get("burptosqlmap")
                 burptosqlmap = os.path.abspath(burptosqlmap)
+                print(burptosqlmap)
                 if burptosqlmap:
                     with open(burptosqlmap,"r") as xml_obj:
                         #coverting the xml data to Python dictionary

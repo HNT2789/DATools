@@ -1,0 +1,127 @@
+{
+    "CHECKIN": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "CHECKOUT": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "CONNECT": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "GET": {
+        "status_code": 200,
+        "length": 49888,
+        "reason": "OK"
+    },
+    "HEAD": {
+        "status_code": 200,
+        "length": 0,
+        "reason": "OK"
+    },
+    "INDEX": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "LINK": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "LOCK": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "MKCOL": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "MOVE": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "NOEXISTE": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "OPTIONS": {
+        "status_code": 200,
+        "length": 0,
+        "reason": "OK"
+    },
+    "ORDERPATCH": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "POST": {
+        "status_code": 200,
+        "length": 49888,
+        "reason": "OK"
+    },
+    "PROPFIND": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "PROPPATCH": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "REPORT": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "SEARCH": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "SHOWMETHOD": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "SPACEJUMP": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "TEXTSEARCH": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "TRACE": {
+        "status_code": 501,
+        "length": 1508,
+        "reason": "Not Implemented"
+    },
+    "TRACK": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "UNLINK": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    },
+    "UNLOCK": {
+        "status_code": 401,
+        "length": 1293,
+        "reason": "Unauthorized"
+    }
+}

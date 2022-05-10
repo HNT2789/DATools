@@ -2,9 +2,12 @@ import xmltodict
 import os
 import subprocess
 import time
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def writeFile(name_of_file,str):
     try:
-        save_path = "DAtool/DAtool/tools/scripts/sqlmap"
+        save_path = BASE_DIR + "\\scripts\\sqlmap"
         completeName = os.path.join(save_path, name_of_file)    
         # completeName = name_of_file 
         obj = open(completeName, "w", encoding='UTF-8')

@@ -147,7 +147,7 @@ a {
 .toolitemchild{
     filter: grayscale();
 	width: 80%;
-	height: 160px;
+	height: 170px;
 	box-shadow: 2px 2px 15px 2px #0AADDF ;
     border-radius: 25px;
 	margin-bottom: 1rem;

@@ -16,7 +16,7 @@
     },
     "GET": {
         "status_code": 200,
-        "length": 92815,
+        "length": 81671,
         "reason": "OK"
     },
     "HEAD": {
@@ -36,17 +36,17 @@
     },
     "LOCK": {
         "status_code": 200,
-        "length": 92815,
+        "length": 81665,
         "reason": "OK"
     },
     "MKCOL": {
         "status_code": 200,
-        "length": 92820,
+        "length": 81673,
         "reason": "OK"
     },
     "MOVE": {
         "status_code": 200,
-        "length": 92817,
+        "length": 81674,
         "reason": "OK"
     },
     "NOEXISTE": {
@@ -56,7 +56,7 @@
     },
     "OPTIONS": {
         "status_code": 200,
-        "length": 92818,
+        "length": 81665,
         "reason": "OK"
     },
     "ORDERPATCH": {
@@ -66,22 +66,22 @@
     },
     "POST": {
         "status_code": 200,
-        "length": 92816,
+        "length": 81663,
         "reason": "OK"
     },
     "PROPFIND": {
         "status_code": 200,
-        "length": 92818,
+        "length": 81668,
         "reason": "OK"
     },
     "PROPPATCH": {
         "status_code": 200,
-        "length": 92814,
+        "length": 81680,
         "reason": "OK"
     },
     "REPORT": {
         "status_code": 200,
-        "length": 92818,
+        "length": 81661,
         "reason": "OK"
     },
     "SEARCH": {
@@ -104,11 +104,6 @@
         "length": 2959,
         "reason": "Bad Request"
     },
-    "TRACE": {
-        "status_code": 400,
-        "length": 0,
-        "reason": "Bad Request"
-    },
     "TRACK": {
         "status_code": 400,
         "length": 2959,
@@ -121,7 +116,7 @@
     },
     "UNLOCK": {
         "status_code": 200,
-        "length": 92815,
+        "length": 81667,
         "reason": "OK"
     }
 }

@@ -36,7 +36,6 @@ def extract_links(url, user_agent, session, cookie):
 		response = session.get(url, headers={'User-Agent':user_agent, 'Cookie':cookie})
 	else:
 		response = session.get(url, headers={'User-Agent':user_agent})
-	print(response)
 	parsed_html = BeautifulSoup(response.text)
 	
 	links = parsed_html.findAll('a')
