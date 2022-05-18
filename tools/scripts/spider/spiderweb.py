@@ -92,7 +92,7 @@ def main():
 	except Exception:
 		print("[-] Website unreachable")
 
-	log(url, unique_links)
+	# log(url, unique_links)
 
 if __name__ == "__main__":
 	main()

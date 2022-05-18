@@ -1,6 +1,7 @@
 import os
 import subprocess
 import time
+import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PY_PATH = os.path.dirname(
@@ -29,26 +30,14 @@ def knockpy(target_url):
         output.append(line.decode("utf-8"))
         yield f"{line.decode('utf-8')}"
         time.sleep(0.5)
-    print(output)
+    tg = target_url
+    json_export(output, tg)
 
-def sublister(target_url):
-    command = [
-        "C:/Users/siaht/AppData/Local/Programs/Python/Python310/python.exe",
-        "C:/Users/siaht/Desktop/TFCT/DAtool/DAtool/tools/scripts/sublist3r.py",
-        "--no-color",
-        "-d",
-        f"{target_url}",
-    ]
 
-    process = subprocess.run(
-        command,
-        capture_output=True,
-        encoding="utf-8",
-    )
-    pre_output = process.stdout.split("\n")
-    result = []
-    for line in pre_output:
-        if target_url in str(line) and "subdomains" not in str(line):
-            result.append(str(line))
 
-    return result
+def json_export(result, tg):
+    directory = f"{BASE_DIR}/../media/toolkit/subdomain"
+    os.makedirs(directory, exist_ok=True)
+    with open(f"{directory}/{tg}", "w") as f:
+        f.write(json.dumps(result, indent=4) + "\n")
+

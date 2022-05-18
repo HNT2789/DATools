@@ -5,7 +5,7 @@ import subprocess
 from bs4 import BeautifulSoup
 
 import requests
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def get(target_url):
     url ='https://sitereport.netcraft.com/?url='+target_url+"&ajax=dcg"
     url0 ='https://sitereport.netcraft.com/?url='+target_url
@@ -41,6 +41,15 @@ def get(target_url):
     host_table = json.loads(result2.text)
     result_final+=host_table['history_table']
     if result_final != "":
+        tg = target_url.split("/")[2]
+        
+        json_export(result_final,tg)
         return result_final
     else:
         return None
+
+def json_export(result, tg):
+    directory = f"{BASE_DIR}/../media/toolkit/netcraft/"
+    os.makedirs(directory, exist_ok=True)
+    with open(f"{directory}/{tg}", "w") as f:
+        f.write(json.dumps(result, indent=4) + "\n")

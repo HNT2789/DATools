@@ -101,14 +101,14 @@ def test_method(method, target_url, proxies, cookies, result):
     }
 
 
-def json_export(result, tg, user_name):
-    directory = f"{BASE_DIR}/../media/toolkit/verbtampering/{user_name}"
+def json_export(result, tg):
+    directory = f"{BASE_DIR}/../media/toolkit/verbtampering"
     os.makedirs(directory, exist_ok=True)
     with open(f"{directory}/{tg}", "w") as f:
         f.write(json.dumps(result, indent=4) + "\n")
 
 
-def start(target_url, user_name):
+def start(target_url):
     # logger.info("Starting HTTP verb enumerating and tampering")
     global methods, tg
     result = {}
@@ -137,5 +137,5 @@ def start(target_url, user_name):
     else:
         if re.match("http\w?://\w+\.\w+", target_url):
             tg = target_url.split("/")[2]
-            json_export(result, tg, user_name)
+            json_export(result, tg)
         return result

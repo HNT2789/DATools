@@ -152,14 +152,14 @@ def verbtamper(request):
 
     else:
         try:
-            global target_url, user_name
+            global target_url
             form = URLForm(request.POST)
             if form.is_valid():
                 target_url = form.cleaned_data.get("target_url")
                 pattern = re.compile("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
                 check = pattern.match(target_url)
-                user_name = request.user
-                result = verbtampering.start(target_url, user_name)
+                # user_name = request.user
+                result = verbtampering.start(target_url)
                 if result is None or check is None:
                     return render(
                         request,
