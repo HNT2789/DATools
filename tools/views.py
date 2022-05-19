@@ -4,7 +4,7 @@ import re
 from types import NoneType
 from urllib import response
 from django.shortcuts import render
-from numpy import not_equal
+# from numpy import not_equal
 from .scripts.ultil import xmltodict
 from .forms import BurptoSqlmap, CvedesForm, Exploitsqlmap, URLForm, SubDomainForm, CrawlForm
 from .scripts import cvescanner, netcraft, verbtampering, subdomain_finder, burpconvert, crawl
