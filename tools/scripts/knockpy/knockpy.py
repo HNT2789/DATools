@@ -671,7 +671,7 @@ def main():
     domain = Start.arguments()
 
     # wordlist
-    print("This scan could be take a while...\nStay on the page\n\n")
+    # print("This scan could be take a while...\nStay on the page\n\n")
     local, google, duckduckgo, virustotal = Wordlist.get(domain)
     wordlist = list(dict.fromkeys((local + google + duckduckgo + virustotal)))
     wordlist = sorted(wordlist, key=str.lower)
@@ -680,20 +680,12 @@ def main():
         if wordlist
         else sys.exit("\nno wordlist")
     )
-
     if not wordlist:
         sys.exit("no wordlist")
-
-    # header
-    # print (Output.headerPrint(local, google, duckduckgo, virustotal, domain))
-    # time_start = time.time()
-    # print (time_start)
-
     # init
     i = 0
     len_wordlist = len(wordlist)
     results = {}
-
     # start
     for subdomain in wordlist:
         i = i + 1
@@ -748,16 +740,7 @@ def main():
         print(Output.linePrint(data, max_len))
         del data["target"]
         results.update({target: data})
-
-    # footer
-    # time_end = time.time()
-    # print(Output.footerPrint(time_end, time_start, results))
     print("Done!")
-
-    # save report
-    # if config["report"]["save"]:
-    #    Report.save(results, domain, time_start, time_end, len_wordlist)
-
 
 if __name__ == "__main__":
     main()
