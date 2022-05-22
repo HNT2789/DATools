@@ -1,5 +1,6 @@
 from .ultil import xmltodict
 import os
+import sys
 import subprocess
 import time
 
@@ -28,17 +29,40 @@ def writeFile(name_of_file,str):
 
 def fullexploit(sqlmappath, result, database_value, risk_value, level_value,tamper):
     writeFile("sql.txt", result)
-    filename = time.strftime("%Y%m%d-%H%M%S")
-    cmd = "python " + sqlmappath + "/sqlmap.py -r " + sqlmappath + "/sql.txt" + " --dbms="+database_value+ " --risk="+risk_value+ " --level="+level_value+ " --tamper=\""+tamper+"\" --batch > " +filename+".txt"
+    timestr = time.strftime("%Y%m%d-%H%M%S")
+    filename = timestr+".txt"
+    cmd = "python " + sqlmappath + "/sqlmap.py -r " + sqlmappath + "/sql.txt" + " --dbms="+database_value+ " --risk="+risk_value+ " --level="+level_value+ " --tamper=\""+tamper+"\" --batch > " +filename
     print(cmd)
     os.system(cmd)
+    if sys.platform.startswith("win32"):
+        os.makedirs(directory, exist_ok=True)
+        command = "move " +filename +" "+directory
+        os.system(command)
+    elif sys.platform.startswith("linux"):
+        os.makedirs(directory, exist_ok=True)
+        command = "mv " +filename +" "+directory
+        os.system(command)
+    else:
+        print("[+] Error: Không xác định được flatform")
 
 def nodbmsexploit(sqlmappath, result, risk_value, level_value,tamper):
     writeFile("sql.txt", result)
-    filename = time.strftime("%Y%m%d-%H%M%S")
-    cmd = "python " + sqlmappath + "/sqlmap.py -r " + sqlmappath + "/sql.txt" + " --risk="+risk_value+ " --level="+level_value+ " --tamper=\""+tamper+"\" --batch > " +filename+".txt" 
+    timestr = time.strftime("%Y%m%d-%H%M%S")
+    filename = timestr+".txt"
+    cmd = "python " + sqlmappath + "/sqlmap.py -r " + sqlmappath + "/sql.txt" + " --risk="+risk_value+ " --level="+level_value+ " --tamper=\""+tamper+"\" --batch > " +filename
     print(cmd)
     os.system(cmd)
+    
+    if sys.platform.startswith("win32"):
+        os.makedirs(directory, exist_ok=True)
+        command = "move " +filename +" "+directory
+        os.system(command)
+    elif sys.platform.startswith("linux"):
+        os.makedirs(directory, exist_ok=True)
+        command = "mv " +filename +" "+directory
+        os.system(command)
+    else:
+        print("[+] Error: Không xác định được flatform")
 
 # def notamperexploit(sqlmappath, result):
 #     writeFile("sql.txt", result)

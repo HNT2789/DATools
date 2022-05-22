@@ -12,6 +12,10 @@ from django.http.response import Http404, HttpResponse, StreamingHttpResponse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = BASE_DIR.replace("\\","/")
+PY_PATH = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
+)
+PY_PATH = PY_PATH.replace("\\","/")
 # Create your views here.
 def home(request):
     return render(request, "toolkit/home.html")
@@ -65,7 +69,7 @@ def burpConvert(request):
             form = BurptoSqlmap(request.POST)
             if form.is_valid():
                 burptosqlmap = form.data.get("burptosqlmap")
-                burptosqlmap = os.path.abspath(burptosqlmap)
+                burptosqlmap = PY_PATH+"/Desktop/"+burptosqlmap
                 print(burptosqlmap)
                 if burptosqlmap:
                     with open(burptosqlmap,"r") as xml_obj:
