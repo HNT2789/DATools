@@ -39,10 +39,10 @@ def cvedes(request):
             if form.is_valid():
                 cve_id = form.cleaned_data.get("cve_id")
                 cve_id = cve_id.upper()
-                pattern = re.compile("CVE-\d{4}-\d{4,7}")
+                cve_id = cve_id.replace(" ","-")
+                pattern = re.compile("^(CVE-(1999|2\d{3})-(0\d{2}[1-9]|[1-9]\d{3,}))$")
                 check = pattern.match(cve_id)
                 result = cvescanner.cve_search(cve_id)
-
                 if check is None:
                     return render(
                         request,
