@@ -6,6 +6,11 @@ from bs4 import BeautifulSoup
 
 import requests
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PY_PATH = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
+)
+PY_PATH = PY_PATH.replace("\\","/")
+
 def get(target_url):
     url ='https://sitereport.netcraft.com/?url='+target_url+"&ajax=dcg"
     url0 ='https://sitereport.netcraft.com/?url='+target_url
@@ -49,7 +54,7 @@ def get(target_url):
         return None
 
 def json_export(result, tg):
-    directory = f"{BASE_DIR}/../media/toolkit/netcraft/"
+    directory = f"{PY_PATH}/Output/netcraft/"
     os.makedirs(directory, exist_ok=True)
     with open(f"{directory}/{tg}", "w") as f:
         f.write(json.dumps(result, indent=4) + "\n")

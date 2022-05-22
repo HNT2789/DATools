@@ -4,11 +4,15 @@ import time
 import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = BASE_DIR.replace("\\","/")
+
 PY_PATH = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
 )
+PY_PATH = PY_PATH.replace("\\","/")
+
 def knockpy(target_url):
-    knockpyurl = BASE_DIR + "\\scripts\\knockpy\\knockpy.py"
+    knockpyurl = BASE_DIR + "/scripts/knockpy/knockpy.py"
     command = [
         "python",
         knockpyurl,
@@ -36,7 +40,7 @@ def knockpy(target_url):
 
 
 def json_export(result, tg):
-    directory = f"{BASE_DIR}/../media/toolkit/subdomain"
+    directory = f"{PY_PATH}/Output/subdomain"
     os.makedirs(directory, exist_ok=True)
     with open(f"{directory}/{tg}", "w") as f:
         f.write(json.dumps(result, indent=4) + "\n")

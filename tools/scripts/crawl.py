@@ -4,8 +4,14 @@ import os
 import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = BASE_DIR.replace("\\","/")
+PY_PATH = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
+)
+PY_PATH = PY_PATH.replace("\\","/")
+
 def crawllink(urltarget):
-    spiderurl = BASE_DIR + "\\scripts\\spider\\spiderweb.py"
+    spiderurl = BASE_DIR + "/scripts/spider/spiderweb.py"
     command = [
         "python",
         spiderurl,
@@ -25,7 +31,7 @@ def crawllink(urltarget):
     json_export(output, tg)
 
 def crawllinkcookie(urltarget, cookie):
-    spiderurl = BASE_DIR + "\\scripts\\spider\\spiderweb.py"
+    spiderurl = BASE_DIR + "/scripts/spider/spiderweb.py"
     command = [
         "python",
         spiderurl,
@@ -47,7 +53,7 @@ def crawllinkcookie(urltarget, cookie):
     json_export(output, tg)
 
 def json_export(result, tg):
-    directory = f"{BASE_DIR}/../media/toolkit/crawl/"
+    directory = f"{PY_PATH}/Output/crawl/"
     os.makedirs(directory, exist_ok=True)
     with open(f"{directory}/{tg}", "w") as f:
         f.write(json.dumps(result, indent=4) + "\n")

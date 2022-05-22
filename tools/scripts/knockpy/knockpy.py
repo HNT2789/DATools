@@ -740,7 +740,8 @@ def main():
         print(Output.linePrint(data, max_len))
         del data["target"]
         results.update({target: data})
-    print("Done!")
+    print("\n[-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-]")
+
 
 if __name__ == "__main__":
     main()

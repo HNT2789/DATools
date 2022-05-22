@@ -11,7 +11,7 @@ from .scripts import cvescanner, netcraft, verbtampering, subdomain_finder, burp
 from django.http.response import Http404, HttpResponse, StreamingHttpResponse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = BASE_DIR.replace("\\","/")
 # Create your views here.
 def home(request):
     return render(request, "toolkit/home.html")
@@ -101,7 +101,7 @@ def exploitsqlmap(request,id):
     id = id-1
     if request.method == "POST":
         form = Exploitsqlmap(request.POST)
-        sqlmappath =  os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\tools\\scripts\\sqlmap"
+        sqlmappath =  BASE_DIR + "/tools/scripts/sqlmap"
         risk_value = form.data.get("risk")
         level_value = form.data.get("level")
         database_value = form.data.get("database")

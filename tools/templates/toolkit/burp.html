@@ -145,9 +145,7 @@
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="form-group col-sm-6">
-                                            <label> Level: <input type="text" id="textInput" value=""
-                                                    style="width: 20px; height: 15px; outline: none; border: 0px solid;"
-                                                    readonly></label>
+                                            <label> Level: <input type="text" id="textInput" value="" style="width: 20px; height: 15px; outline: none; border: red 0px solid;" readonly></label>
                                             <input type="range" class="form-control" min="1" max="5"
                                                 onchange="updateTextInput(this.value);" name="level" id="level" autofocus
                                                 required>

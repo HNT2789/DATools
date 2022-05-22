@@ -89,8 +89,9 @@ def main():
 
 	try:
 		crawl(url, unique_links, user_agent, session, cookie)
+		print("\n[-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-]")
 	except Exception:
-		print("[-] Website unreachable")
+		print("\n[-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-]")
 
 	# log(url, unique_links)
 

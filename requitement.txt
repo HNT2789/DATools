@@ -1,0 +1,7 @@
+django
+requests
+bs4
+matplotlib==3.5.1
+networkx==2.6.3
+colorama==0.4.4
+

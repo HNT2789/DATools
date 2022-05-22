@@ -1,6 +1,3 @@
-# from rich.console import Console
-# from rich import box
-# from rich.table import Table
 import json
 import os
 import re
@@ -8,9 +5,12 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
-# from http.cookies import SimpleCookie
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PY_PATH = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
+)
+PY_PATH = PY_PATH.replace("\\","/")
+
 methods = [
     "CHECKIN",
     "CHECKOUT",
@@ -52,7 +52,6 @@ def methods_from_http_options(console, target_url, options, proxies, cookies):
         # logger.error("Invalid proxy specified ")
         raise SystemExit
     if r.status_code == 200:
-        # logger.verbose("URL accepts OPTIONS")
         # logger.debug(r.headers)
         if "Allow" in r.headers:
             # logger.info("URL answers with a list of options: {}".format(r.headers["Allow"]))
@@ -84,10 +83,8 @@ def test_method(method, target_url, proxies, cookies, result):
         r = requests.request(
             method=method,
             url=target_url,
-            # verify=options.verify,  # this is to set the client to accept insecure servers
             proxies=proxies,
             cookies=cookies,
-            # allow_redirects=options.redirect,
             stream=False,  # If True, this is to prevent the download of huge files, focus on the request, not on the data
         )
     except requests.exceptions.ProxyError:
@@ -102,7 +99,7 @@ def test_method(method, target_url, proxies, cookies, result):
 
 
 def json_export(result, tg):
-    directory = f"{BASE_DIR}/../media/toolkit/verbtampering"
+    directory = f"{PY_PATH}/Output/verbtampering"
     os.makedirs(directory, exist_ok=True)
     with open(f"{directory}/{tg}", "w") as f:
         f.write(json.dumps(result, indent=4) + "\n")
