@@ -42,7 +42,6 @@ def cvedes(request):
                 cve_id = cve_id.replace(" ","-")
                 pattern = re.compile("^(CVE-(1999|2\d{3})-(0\d{2}[1-9]|[1-9]\d{3,}))$")
                 check = pattern.match(cve_id)
-                result = cvescanner.cve_search(cve_id)
                 if check is None:
                     return render(
                         request,
@@ -50,6 +49,7 @@ def cvedes(request):
                         {"error": "Dữ liệu nhập vào không hợp lệ, xin hãy nhập lại."},
                     )
                 else:
+                    result = cvescanner.cve_search(cve_id)
                     context = {"result": result}
                     return render(request, "toolkit/cvedes.html", context)
 
@@ -69,7 +69,7 @@ def burpConvert(request):
             form = BurptoSqlmap(request.POST)
             if form.is_valid():
                 burptosqlmap = form.data.get("burptosqlmap")
-                burptosqlmap = PY_PATH+"/Desktop/"+burptosqlmap
+                burptosqlmap = BASE_DIR+"/"+burptosqlmap
                 print(burptosqlmap)
                 if burptosqlmap:
                     with open(burptosqlmap,"r") as xml_obj:
