@@ -1,4 +1,5 @@
 from urllib.parse import urljoin
+from matplotlib import projections
 
 import requests
 
@@ -73,7 +74,6 @@ class CVESearch(object):
         """cvefor() returns a dict containing the CVE's for a given CPE ID"""
         data = self._http_get("cvefor", query=param)
         return data.json()
-
 
 def cve_search(cve_id):
     cve = CVESearch()

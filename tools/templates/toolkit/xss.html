@@ -1,0 +1,63 @@
+{% extends "toolkit/base.html" %}
+{% block content %}
+{% load static %}
+
+<head>
+  <title>
+    {% block title %}
+    Crawl Link
+    {% endblock %}
+  </title>
+</head>
+
+
+<div class="d-flex flex-column align-self-start">
+  <div class="searchapi">
+    <form autocomplete="off" method="POST" action="">
+      <hr>
+      {% csrf_token %}
+      <div class="row" style="height: 50px;">
+        <div class="form-group col-md-12">
+          <input class="form-control searchapiinput" name="target_url" type="text" placeholder="Nhập đường dẫn của website" style="border: none; border-top-right-radius: 25px !important;border-bottom-right-radius: 25px !important">
+        </div>
+      </div>
+
+      <!-- <div class="row" style="height: 50px;">
+        <div class="form-group col-md-12">
+          <input type="input" class="form-control" name="user_agent" id="user_agent" placeholder="User agent"
+            autofocus >
+        </div>
+      </div> -->
+
+      <div class="row">
+        <div class="form-group col-md-12">
+          <input type="input" class="form-control searchapiinput" name="cookie" id="cookie" placeholder="Cookie" style="border: none; border-top-right-radius: 25px !important;border-bottom-right-radius: 25px !important" autofocus>
+        </div>
+        <!-- <div class="form-group col-md-12">
+          <label> Level:</label>
+
+          <input type="input" class="form-control" name="level" id="level" autofocus>
+
+        </div>
+
+        <div class="form-group col-md-12">
+          <label> Level:</label>
+
+          <input type="input" class="form-control" name="level" id="level" autofocus>
+
+        </div> -->
+      </div>
+      <hr>
+      <div class="row">
+        <button class="btn btn-info text-white"  type='submit' onclick="show()" id="btnID">Detect XSS</button>
+      </div>
+
+    </form>
+  </div>
+
+
+  {% if error %}
+  <h2 style="text-align:center" class="text-danger">{{ error }}</h2>
+  {% endif %}
+</div>
+{% endblock %}

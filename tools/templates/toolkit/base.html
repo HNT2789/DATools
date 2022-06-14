@@ -26,11 +26,9 @@
       text-decoration: none;
     }
 
-    /* .btn:hover{
-      background-color: #ffc107;
-      border: #ffc107;
-      transform: translateY(0) scale(1.05);
-    } */
+    #image {
+      display: none;
+    }
 
   </style>
 </head>
@@ -64,15 +62,27 @@
   </div>
 
   <!--Container Main start-->
-  <div class="container w-100 p-3 min-vh-70" style="margin-top:150px;">
-    {% block content %}
+  <div class="container w-100 p-3 min-vh-70" style="margin-top:150px;" >
+    <div id="mainbody">
+      {% block content %}
 
-    {% endblock %}
+      {% endblock %}
+    </div>
+    <div id="image" class="text-center">
+      <img  src="{% static 'toolkit/images/loading.gif' %}">
+    </div>
+    <script type="text/javascript">
+      function show() {
+          document.getElementById('image')
+                  .style.display = "block";
+          document.getElementById('mainbody')
+                  .style.display = "none";
+          }
+    </script> 
     <script src="{% static 'toolkit/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
     <script src="{% static 'toolkit/js/popper.js' %}" crossorigin="anonymous"></script>
     <script src="{% static 'toolkit/js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
     <script src="{% static 'toolkit/js/f5cf569195.js' %}" crossorigin="anonymous"></script>
-
     <script src="{% static 'toolkit/js/sidebar.js' %}" crossorigin="anonymous"></script>
   </div>
 

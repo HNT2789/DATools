@@ -9,6 +9,7 @@
     {% endblock %}
   </title>
   <link rel="stylesheet" type="text/css" href="{% static 'toolkit/css/sitereport.css' %}" media="all" />
+
 </head>
 
 
@@ -18,25 +19,41 @@
         <div class="input-group input-group-lg mb-3" >
             {% csrf_token %}
             <input class="form-control searchapiinput" name="target_url" type="text" placeholder="Nhập đường dẫn của website" style="border: none;">
-            <button class="btn mybutton" type='submit'>
+            <button class="btn mybutton" type='submit' onclick="show()" id="btnID">
                 <i class='bx bx-search-alt'></i>
             </button>
         </div>
     </form>
 </div>
+    {% if error %}
+    <h2 style="text-align:center" class="text-danger">{{ error }}</h2>
+    {% endif %}
 
-  {% if error %}
-  <h2 style="text-align:center" class="text-danger">{{ error }}</h2>
-  {% endif %}
+    {% if result %}
+    <!-- <section class="site_report_table" id="background_table_section"> 
+      <div class="section_title">
+          <h2>Insecure Header</h2> 
+          <span class="section_links"> 
+            <a class="fas fa-link" href="#"></a> 
+            <a class="fas fa-arrow-up" href="#"></a> 
+          </span>
+      </div>
+      <div class="section_content">
+        {% for i in InsecureHeader %}
+          <div class="row">
+              {{ i }}
+          </div>
+        {% endfor %}      
+      </div>
+    </section> -->
 
-
-  {% if result %}
-  <div class="banner">
-    <div class="banner__container--text">
-      {{result | safe}}
+    <div class="banner">
+      <div class="banner__container--text">
+        {{result | safe}}
+      </div>
     </div>
-  </div>
-  {% endif %}
+
+    {% endif %}
 </div>
 
 {% endblock %}

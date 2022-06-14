@@ -714,7 +714,7 @@ def main():
             continue
 
         # dns and http(s)
-        Output.progressPrint("dns: %s | https://%s" % (ip_req, target))
+        # Output.progressPrint("dns: %s | https://%s" % (ip_req, target))
         https = Request.https(target)
 
         if https:
@@ -737,7 +737,7 @@ def main():
         data = Output.jsonzeRequestData(req, target)
         if data["code"] in config["no_http_code"]:
             continue
-        print(Output.linePrint(data, max_len))
+        print(Output.linePrint(data, max_len)+'\n-------------------------------------------------------------------------------------------\n')
         del data["target"]
         results.update({target: data})
     print("\n[-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-][-]")

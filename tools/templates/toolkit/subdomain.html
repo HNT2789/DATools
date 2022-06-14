@@ -16,7 +16,7 @@
         <div class="input-group input-group-lg mb-3" >
             {% csrf_token %}
             <input class="form-control searchapiinput" name="target_url" type="text" placeholder="Nhập đường dẫn của website" style="border: none;">
-            <button class="btn mybutton" type='submit'>
+            <button class="btn mybutton" type='submit' onclick="show()" id="btnID">
                 <i class='bx bx-search-alt'></i>
             </button>
         </div>

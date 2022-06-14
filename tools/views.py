@@ -1,14 +1,11 @@
-import multiprocessing
 import os
 import re
-from types import NoneType
-from urllib import response
 from django.shortcuts import render
 # from numpy import not_equal
 from .scripts.ultil import xmltodict
 from .forms import BurptoSqlmap, CvedesForm, Exploitsqlmap, URLForm, SubDomainForm, CrawlForm
 from .scripts import cvescanner, netcraft, verbtampering, subdomain_finder, burpconvert, crawl
-from django.http.response import Http404, HttpResponse, StreamingHttpResponse
+from django.http.response import StreamingHttpResponse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = BASE_DIR.replace("\\","/")
@@ -129,7 +126,7 @@ def netCraft(request):
             form = URLForm(request.POST)
             if form.is_valid():
                 target_url = form.cleaned_data.get("target_url")
-                pattern = re.compile("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+                pattern = re.compile('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
                 check = pattern.match(target_url)
                 if check is None:
                     return render(
@@ -139,7 +136,8 @@ def netCraft(request):
                     )
 
                 else:
-                    result = netcraft.get(target_url)
+                    result = netcraft.getNetcraft(target_url)
+                    print(result)
                     context = {"result": result, "target_url": target_url}
                     return render(request, "toolkit/netcraft.html", context)
 
@@ -147,7 +145,7 @@ def netCraft(request):
             return render(
                 request,
                 "toolkit/netcraft.html",
-                {"error": "Dữ liệu nhập vào không hợp lệ, xin hãy nhập lại."},
+                {"error": "Đã có lỗi xảy ra, xin hãy thử lại."},
             )
 
 def verbtamper(request):
@@ -160,9 +158,8 @@ def verbtamper(request):
             form = URLForm(request.POST)
             if form.is_valid():
                 target_url = form.cleaned_data.get("target_url")
-                pattern = re.compile("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+                pattern = re.compile('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
                 check = pattern.match(target_url)
-                # user_name = request.user
                 result = verbtampering.start(target_url)
                 if result is None or check is None:
                     return render(
@@ -192,7 +189,7 @@ def subdomain(request):
             form = SubDomainForm(request.POST)
             if form.is_valid():
                 target_url = form.cleaned_data.get("target_url")
-                pattern = re.compile("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+                pattern = re.compile('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
                 check = pattern.match(target_url)
                 if check is None:
                     return render(
@@ -202,12 +199,11 @@ def subdomain(request):
                     )
                 else:
                     target_url = re.search(
-                        r"\w+\.\w+",
+                        r"\w+\.\w+\.\w+",
                         target_url.replace("https://", "")
                         .replace("http://", "")
                         .replace("www.", ""),
                     )[0]
-
                     response = StreamingHttpResponse(
                         subdomain_finder.knockpy(target_url)
                     )  
@@ -262,6 +258,46 @@ def crawler(request):
                 {"error": "Dữ liệu nhập vào không hợp lệ, xin hãy nhập lại."},
             )
 
+def detectxss(request):
+    if request.method == "GET":
+        return render(
+            request, "toolkit/crawl.html", {"form": CrawlForm()}
+        )
+    else:
+        try:
+            global target_url
+            form = CrawlForm(request.POST)
+            if form.is_valid():
+                target_url = form.cleaned_data.get("target_url")
+                pattern = re.compile("https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+                check = pattern.match(target_url)
+                cookie = form.cleaned_data.get("cookie")
+                if check is None:
+                    return render(
+                        request,
+                        "toolkit/xss.html",
+                        {"error": "Dữ liệu nhập vào không hợp lệ, xin hãy nhập lại."},
+                    )
+                else:
+                    if cookie == "":
+                        response = StreamingHttpResponse(
+                            crawl.crawllink(target_url)
+                        )  
+                        response["Content-Type"] = "text/event-stream"
+                        return response
+                    else:
+                        response = StreamingHttpResponse(
+                            crawl.crawllinkcookie(target_url, cookie)
+                        )  
+                        response["Content-Type"] = "text/event-stream"
+                        return response
+
+        except ValueError:
+            return render(
+                request,
+                "toolkit/xss.html",
+                {"error": "Dữ liệu nhập vào không hợp lệ, xin hãy nhập lại."},
+            )
 
 
 

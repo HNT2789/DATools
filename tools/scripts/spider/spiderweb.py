@@ -7,12 +7,10 @@ from bs4 import BeautifulSoup
 
 def get_arguments():
 	parser = argparse.ArgumentParser()
-
 	parser.add_argument("-w", "--website-url", dest="url", help="URL")
 	parser.add_argument("-u", "--user-agent", dest="user_agent", help="User Agent to use(default=Python requests)")
 	parser.add_argument("-p", "--proxy", dest="proxy", help="Format : protocol://IP:port")
 	parser.add_argument("-c", "--cookie", dest="cookie", help="Cookies to use")
-
 	options = parser.parse_args()
 
 	if not options.url:

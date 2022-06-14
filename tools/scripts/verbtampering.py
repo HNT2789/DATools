@@ -12,31 +12,10 @@ PY_PATH = os.path.dirname(
 PY_PATH = PY_PATH.replace("\\","/")
 
 methods = [
-    "CHECKIN",
-    "CHECKOUT",
-    "CONNECT",
-    "GET",
-    "HEAD",
-    "INDEX",
-    "LINK",
-    "LOCK",
-    "MKCOL",
-    "MOVE",
-    "NOEXISTE",
-    "ORDERPATCH",
-    "OPTIONS",
-    "POST",
-    "PROPFIND",
-    "PROPPATCH",
-    "REPORT",
-    "SEARCH",
-    "SHOWMETHOD",
-    "SPACEJUMP",
-    "TEXTSEARCH",
-    "TRACE",
-    "TRACK",
-    "UNLINK",
-    "UNLOCK",
+    "CHECKIN", "CHECKOUT", "CONNECT", "GET", "HEAD","INDEX",
+    "LINK", "LOCK", "MKCOL", "MOVE", "NOEXISTE", "ORDERPATCH", "OPTIONS",
+    "POST", "PROPFIND", "PROPPATCH", "REPORT", "SEARCH", "SHOWMETHOD",
+    "SPACEJUMP", "TEXTSEARCH", "TRACE", "TRACK", "UNLINK","UNLOCK",
 ]
 # Dangerious Methods: 'COPY', 'DELETE', 'PUT',  'PATCH', 'UNCHECKOUT',
 
@@ -112,7 +91,6 @@ def start(target_url):
     proxies = None
 
     cookies = {}
-
 
     # Sort uniq
     methods = [m.upper() for m in methods]

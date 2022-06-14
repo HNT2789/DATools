@@ -14,6 +14,6 @@ urlpatterns = [
     path("verbtampering/", views.verbtamper, name="verbtamper"),
     path("subdomain/", views.subdomain, name="subdomain"),
     path("crawler/", views.crawler, name="crawler"),
-
+    path("detectxss/", views.detectxss, name="detectxss"),
     # <str:filepath>/
 ]

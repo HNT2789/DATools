@@ -145,6 +145,8 @@ back
 backend
 backup
 baker
+sdh
+tuyensinh
 bakersfield
 balance
 balancer
@@ -635,6 +637,7 @@ extern
 external
 extranet
 f
+thuvienso
 f5
 falcon
 farm
