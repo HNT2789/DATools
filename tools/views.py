@@ -261,7 +261,7 @@ def crawler(request):
 def detectxss(request):
     if request.method == "GET":
         return render(
-            request, "toolkit/crawl.html", {"form": CrawlForm()}
+            request, "toolkit/xss.html", {"form": CrawlForm()}
         )
     else:
         try:
