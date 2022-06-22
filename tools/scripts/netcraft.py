@@ -122,4 +122,5 @@ def json_export(result, tg):
     with open(f"{directory}/{tg}", "w") as f:
         f.write(json.dumps(result, indent=4) + " \n")
 
+
 # print(getNetcraft("http://actvn.edu.vn"))

@@ -128,6 +128,7 @@ def netCraft(request):
                 target_url = form.cleaned_data.get("target_url")
                 pattern = re.compile('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
                 check = pattern.match(target_url)
+                result = netcraft.getNetcraft(target_url)
                 if check is None:
                     return render(
                         request,
@@ -136,7 +137,6 @@ def netCraft(request):
                     )
 
                 else:
-                    result = netcraft.getNetcraft(target_url)
                     print(result)
                     context = {"result": result, "target_url": target_url}
                     return render(request, "toolkit/netcraft.html", context)
@@ -198,12 +198,7 @@ def subdomain(request):
                         {"error": "Dữ liệu nhập vào không hợp lệ, xin hãy nhập lại."},
                     )
                 else:
-                    target_url = re.search(
-                        r"\w+\.\w+\.\w+",
-                        target_url.replace("https://", "")
-                        .replace("http://", "")
-                        .replace("www.", ""),
-                    )[0]
+                    target_url = target_url.replace("https://", "").replace("http://", "").replace("www.", "")
                     response = StreamingHttpResponse(
                         subdomain_finder.knockpy(target_url)
                     )  
